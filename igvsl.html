@@ -75,9 +75,9 @@
         .logo-glow {
             animation: glowingLogo 3s infinite ease-in-out;
         }
-        /* Toast Notification */
+        /* Toast Notification Profesional */
         #toast {
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             transform: translateY(-20px);
             opacity: 0;
             pointer-events: none;
@@ -87,6 +87,24 @@
             opacity: 1;
             pointer-events: auto;
         }
+        /* Contenedor VSL perfecto sin cortes */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Relación 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
     </style>
 </head>
 <body class="relative min-h-screen flex flex-col justify-between selection:bg-sikGreen selection:text-black">
@@ -94,9 +112,9 @@
     <div id="particles-js"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-glow pointer-events-none z-0"></div>
 
-    <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-[#121212] border border-sikGreen/40 px-5 py-3 rounded-2xl shadow-[0_0_25px_rgba(16,185,129,0.3)] flex items-center space-x-3">
-        <span class="w-2.5 h-2.5 rounded-full bg-sikGreen animate-ping"></span>
-        <p class="text-sm font-medium text-gray-200">¡Aviso SIK! Al apretar el logo puedes volver al anuncio principal.</p>
+    <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-[#121212] border border-sikGreen/50 px-6 py-3.5 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.35)] flex items-center space-x-3">
+        <span class="w-3 h-3 rounded-full bg-sikGreen animate-ping"></span>
+        <p id="toast-text" class="text-sm font-semibold text-gray-100">💡 Tip SIK: Recuerda que apretando el logo superior puedes volver al anuncio.</p>
     </div>
 
     <header class="fixed top-0 left-0 w-full z-40 glass-nav transition-all duration-300">
@@ -105,7 +123,7 @@
             <div class="flex items-center">
                 <button id="logo-btn" onclick="handleLogoClick(event)" aria-label="Volver al anuncio" class="relative w-12 h-12 rounded-full bg-gradient-to-br from-sikGreen to-sikGreenDark flex items-center justify-center logo-glow focus:outline-none cursor-pointer group">
                     <span class="text-black font-black text-xl tracking-wider">SIK</span>
-                    <span class="absolute -bottom-8 bg-[#121212] text-xs text-sikGreen px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-sikGreen/30">Volver al anuncio</span>
+                    <span class="absolute -bottom-8 bg-[#121212] text-xs text-sikGreen px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-sikGreen/30 shadow-lg">Volver al anuncio</span>
                 </button>
             </div>
 
@@ -132,20 +150,19 @@
                 </p>
             </div>
 
-            <div class="glass-card rounded-3xl p-3 sm:p-6 relative overflow-hidden border border-sikGreen/30">
-                <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-[0_0_30px_rgba(0,0,0,0.8)] border border-white/10">
+            <div class="glass-card rounded-3xl p-4 sm:p-8 relative overflow-hidden border border-sikGreen/30">
+                <div class="video-container shadow-[0_15px_50px_rgba(0,0,0,0.9)] border border-white/10">
                     <iframe src="https://drive.google.com/file/d/1tg9Orezje1Falp3iC9YqLw1bDJ8DU5Gv/preview" 
-                            class="absolute inset-0 w-full h-full border-0" 
                             allow="autoplay" 
                             allowfullscreen>
                     </iframe>
                 </div>
-                <div class="mt-4 flex items-center justify-between px-2">
+                <div class="mt-6 flex flex-col sm:flex-row items-center justify-between px-2 gap-2">
                     <div class="flex items-center space-x-2">
-                        <span class="w-2 h-2 rounded-full bg-sikGreen"></span>
-                        <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Video Oficial SIK VSL</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-sikGreen animate-pulse"></span>
+                        <span class="text-xs uppercase tracking-wider text-gray-300 font-semibold">Video Oficial SIK VSL &bull; Alta Definición</span>
                     </div>
-                    <span class="text-xs text-sikGreen font-medium">Reproducción Segura</span>
+                    <span class="text-xs text-sikGreen font-medium bg-sikGreen/10 px-3 py-1 rounded-full border border-sikGreen/20">Reproducción Interactiva Activa</span>
                 </div>
             </div>
 
@@ -219,16 +236,35 @@
             retina_detect: true
         });
 
-        // Función para el botón del logo SIK (Muestra el aviso profesional y redirige al index)
+        // Función para mostrar el Toast con mensaje personalizado
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+
+        function showToast(message, duration = 3500) {
+            toastText.innerHTML = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // Alerta automática cada 10 segundos
+        setInterval(() => {
+            showToast("💡 Tip SIK: Recuerda que apretando el logo superior puedes volver al anuncio.");
+        }, 10000);
+
+        // Mostrar alerta inicial a los 2 segundos de cargar la página
+        setTimeout(() => {
+            showToast("💡 Tip SIK: Recuerda que apretando el logo superior puedes volver al anuncio.");
+        }, 2000);
+
+        // Función para el botón del logo SIK
         function handleLogoClick(event) {
             event.preventDefault();
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            
-            // Redirigir a index.html después de 1.5 segundos para apreciar el aviso
+            showToast("🚀 ¡Volviendo al anuncio principal de SIK!", 2000);
             setTimeout(() => {
                 window.location.href = 'index.html';
-            }, 1500);
+            }, 1200);
         }
     </script>
 </body>
