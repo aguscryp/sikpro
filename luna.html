@@ -3,462 +3,616 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSlots X - Advanced Casino</title>
+    <title>LUHACASINO - NextGen Cyber Slots</title>
     <style>
         :root {
-            --neon-cyan: #00ffcc;
-            --neon-pink: #ff007f;
+            --neon-cyan: #00f3ff;
+            --neon-magenta: #ff0055;
             --neon-purple: #9d00ff;
-            --bg-dark: #05070d;
-            --panel-bg: rgba(18, 20, 32, 0.85);
+            --neon-gold: #ffd700;
+            --bg-deep: #03050a;
+            --panel-glass: rgba(10, 14, 28, 0.85);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-deep);
             background-image: 
-                radial-gradient(circle at 50% 50%, #1a1c2e 0%, #05070d 100%),
-                linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px, 30px 30px;
+                radial-gradient(circle at 50% 30%, #121a38 0%, #03050a 80%),
+                linear-gradient(rgba(0, 243, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+            padding: 20px;
         }
 
-        .casino-container {
-            background: var(--panel-bg);
-            backdrop-filter: blur(10px);
+        .casino-wrapper {
+            background: var(--panel-glass);
+            backdrop-filter: blur(16px);
             border: 2px solid var(--neon-cyan);
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.25), inset 0 0 15px rgba(0, 255, 204, 0.1);
-            border-radius: 20px;
-            padding: 35px;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
             text-align: center;
-            max-width: 480px;
+            max-width: 520px;
             width: 100%;
             position: relative;
         }
 
-        .casino-container::before {
+        .casino-wrapper::before {
             content: '';
             position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, var(--neon-cyan), transparent, var(--neon-pink));
-            border-radius: 20px;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-magenta));
+            border-radius: 26px;
             z-index: -1;
-            filter: blur(5px);
-            opacity: 0.7;
+            filter: blur(8px);
+            opacity: 0.6;
         }
 
-        h1 {
+        .brand-title {
             color: var(--neon-cyan);
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.8), 0 0 20px rgba(0, 255, 204, 0.4);
+            font-size: 2.4rem;
+            font-weight: 900;
+            margin-bottom: 2px;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.8), 0 0 30px rgba(0, 243, 255, 0.4);
             letter-spacing: 4px;
         }
 
-        .subtitle {
-            font-size: 0.75rem;
-            color: var(--neon-pink);
-            letter-spacing: 3px;
+        .brand-subtitle {
+            font-size: 0.7rem;
+            color: var(--neon-magenta);
+            letter-spacing: 5px;
             margin-bottom: 20px;
-            text-shadow: 0 0 5px rgba(255, 0, 127, 0.6);
+            text-shadow: 0 0 8px rgba(255, 0, 85, 0.6);
+            text-transform: uppercase;
         }
 
-        .balance-board {
-            background: rgba(10, 12, 18, 0.9);
-            border: 1px solid var(--neon-pink);
-            border-radius: 10px;
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(5, 8, 18, 0.95);
+            border: 1px solid var(--neon-purple);
+            border-radius: 12px;
             padding: 12px;
+            box-shadow: inset 0 0 12px rgba(157, 0, 255, 0.2);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: #8892b0;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .stat-value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+
+        .slots-viewport {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            background: #010204;
+            border: 3px solid #1e2640;
+            border-radius: 16px;
+            padding: 20px 10px;
             margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: var(--neon-pink);
-            text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
-            box-shadow: inset 0 0 10px rgba(255, 0, 127, 0.2);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .slots-window {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            background: #020305;
-            border: 2px solid #2a2e43;
-            border-radius: 15px;
-            padding: 25px 15px;
-            margin-bottom: 25px;
-            box-shadow: inset 0 0 20px #000;
-        }
-
-        .reel {
-            background: linear-gradient(180deg, #0d111a 0%, #161b28 50%, #0d111a 100%);
-            border: 2px solid var(--neon-cyan);
-            border-radius: 10px;
-            width: 85px;
-            height: 110px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.8);
+            box-shadow: inset 0 0 25px #000, 0 0 15px rgba(0, 243, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
 
-        .reel.spinning {
-            animation: shake 0.1s infinite;
-            filter: blur(1.5px);
-            border-color: var(--neon-pink);
+        .slots-viewport::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 0, 85, 0.4);
+            transform: translateY(-50%);
+            pointer-events: none;
+            box-shadow: 0 0 8px var(--neon-magenta);
         }
 
-        @keyframes shake {
-            0% { transform: translateY(2px); }
-            50% { transform: translateY(-2px); }
-            100% { transform: translateY(2px); }
+        .reel-container {
+            background: linear-gradient(180deg, #090d1a 0%, #121829 50%, #090d1a 100%);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 12px;
+            width: 110px;
+            height: 130px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.8);
         }
 
-        .controls {
+        .reel-strip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            transition: transform 0.1s ease-out;
         }
 
-        .bet-control {
+        .symbol-card {
+            height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .symbol-card img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+            transition: transform 0.2s;
+        }
+
+        .symbol-name {
+            font-size: 0.55rem;
+            color: #a0aec0;
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .bet-selector {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(18, 20, 32, 0.9);
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
+            background: rgba(5, 8, 18, 0.95);
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid #2a3456;
         }
 
-        .bet-control label {
-            font-size: 0.85rem;
-            color: #aaa;
+        .bet-selector label {
+            font-size: 0.75rem;
+            color: #a0aec0;
             letter-spacing: 1px;
         }
 
-        .bet-control input {
-            background: #05070d;
+        .bet-inputs-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bet-selector input {
+            background: #020408;
             border: 1px solid var(--neon-cyan);
             color: var(--neon-cyan);
             padding: 6px;
-            width: 80px;
+            width: 110px;
             text-align: center;
             border-radius: 6px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             outline: none;
         }
 
-        .spin-btn {
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 100%);
+        .action-btn {
+            background: linear-gradient(135deg, var(--neon-magenta) 0%, var(--neon-purple) 100%);
             color: white;
             border: none;
-            padding: 15px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border-radius: 10px;
+            padding: 16px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border-radius: 12px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+            letter-spacing: 3px;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
             transition: all 0.2s ease;
         }
 
-        .spin-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #ff3399 0%, #b8005b 100%);
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.9);
+        .action-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ff1a75. 0%, #b8005b 100%);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.9);
             transform: translateY(-2px);
         }
 
-        .spin-btn:disabled {
-            background: #222;
-            color: #555;
+        .action-btn:disabled {
+            background: #1a1e2e;
+            color: #4a5568;
             cursor: not-allowed;
             box-shadow: none;
-            border: 1px solid #333;
+            border: 1px solid #2d3748;
         }
 
-        .message {
-            margin-top: 20px;
-            font-size: 1rem;
-            min-height: 28px;
-            font-weight: bold;
+        .notification-bar {
+            margin-top: 18px;
+            font-size: 0.9rem;
+            min-height: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-win {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.8);
+            animation: textPulse 0.5s ease infinite alternate;
+        }
+
+        .status-lose {
+            color: #ff4d4d;
+            text-shadow: 0 0 8px rgba(255, 77, 77, 0.5);
+        }
+
+        @keyframes textPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.03); }
+        }
+
+        .audio-control-btn {
+            margin-top: 12px;
+            background: transparent;
+            border: 1px solid #334155;
+            color: #64748b;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
             letter-spacing: 1px;
         }
 
-        .win {
-            color: var(--neon-cyan);
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
-            animation: pulse 0.5s ease infinite alternate;
-        }
-
-        .lose {
-            color: #ff4444;
-            text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
-        }
-
-        .audio-toggle {
-            margin-top: 15px;
-            background: transparent;
-            border: 1px solid #444;
-            color: #888;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .audio-toggle.active {
+        .audio-control-btn.active {
             border-color: var(--neon-cyan);
             color: var(--neon-cyan);
-            box-shadow: 0 0 5px rgba(0, 255, 204, 0.3);
+            box-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
+            background: rgba(0, 243, 255, 0.05);
         }
     </style>
 </head>
 <body>
 
-    <div class="casino-container">
-        <h1>CYBER SLOTS X</h1>
-        <div class="subtitle">// QUANTUM ENGINE v3.0 //</div>
+    <div class="casino-wrapper">
+        <h1 class="brand-title">LUHACASINO</h1>
+        <div class="subtitle brand-subtitle">// QUANTUM HIGH-ROLLER ENGINE //</div>
         
-        <div class="balance-board">
-            <span>CRÉDITOS: <strong id="balance">1000</strong> 🪙</span>
-            <span>JACKPOT: <strong id="jackpotVal">5000</strong> 💎</span>
-        </div>
-
-        <div class="slots-window">
-            <div class="reel" id="reel1">⚡</div>
-            <div class="reel" id="reel2">🔥</div>
-            <div class="reel" id="reel3">💎</div>
-        </div>
-
-        <div class="controls">
-            <div class="bet-control">
-                <label for="betInput">APUESTA:</label>
-                <input type="number" id="betInput" value="20" min="10" max="1000">
+        <div class="dashboard">
+            <div class="stat-box">
+                <span class="stat-label">SALDO DISPONIBLE</span>
+                <span class="stat-value" id="balanceDisplay">$50.000 ARS</span>
             </div>
-            <button class="spin-btn" id="spinBtn" onclick="iniciarJuego()">¡GIRAR SISTEMA!</button>
+            <div class="stat-box">
+                <span class="stat-label">JACKPOT GLOBAL</span>
+                <span class="stat-value" id="jackpotDisplay">$250.000 ARS</span>
+            </div>
         </div>
 
-        <button class="audio-toggle" id="audioToggle" onclick="toggleAudio()">🔊 ACTIVAR SONIDO / BGM</button>
-        <div class="message" id="message">Sistemas listos. Ingrese apuesta.</div>
+        <div class="slots-viewport">
+            <div class="reel-container">
+                <div class="reel-strip" id="strip1"></div>
+            </div>
+            <div class="reel-container">
+                <div class="reel-strip" id="strip2"></div>
+            </div>
+            <div class="reel-container">
+                <div class="reel-strip" id="strip3"></div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="bet-selector">
+                <label for="betInput">APUESTA (ARS):</label>
+                <div class="bet-inputs-group">
+                    <input type="number" id="betInput" value="1000" min="500" max="50000" step="500">
+                </div>
+            </div>
+            <button class="action-btn" id="spinBtn" onclick="ejecutarJugada()">¡GIRAR RODILLOS!</button>
+        </div>
+
+        <button class="audio-control-btn" id="audioToggle" onclick="toggleAudioSystem()">🎵 ACTIVAR BGM & EFECTOS</button>
+        <div class="notification-bar" id="notificationText">Sistemas en línea. Ingrese su apuesta en pesos.</div>
     </div>
 
     <script>
-        const simbolos = ['⚡', '🔥', '💎', '🚀', '7️⃣', '🌐'];
-        let balance = 1000;
-        let audioCtx = null;
-        let isAudioEnabled = false;
-        let bgmInterval = null;
+        // Definición de recursos gráficos avanzados (SVG Vectoriales Integrados)
+        const assetSymbols = [
+            {
+                name: 'Diamante',
+                img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,5 95,35 75,95 25,95 5,35" fill="%2300f3ff" stroke="%23ffffff" stroke-width="3"/><polygon points="50,5 25,35 50,95" fill="%230099cc"/><polygon points="50,5 75,35 50,95" fill="%2300e6ff"/></svg>'
+            },
+            {
+                name: 'Cripto Moneda',
+                img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ffd700" stroke="%23b8860b" stroke-width="4"/><text x="50" y="68" font-size="50" font-weight="bold" text-anchor="middle" fill="%23333">₿</text></svg>'
+            },
+            {
+                name: 'Lucky Seven',
+                img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="78" font-size="80" font-weight="900" text-anchor="middle" fill="%23ff0055" stroke="%23fff" stroke-width="2">7</text></svg>'
+            },
+            {
+                name: 'Cyber Star',
+                img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,5 63,35 95,38 70,60 78,92 50,75 22,92 30,60 5,38 37,35" fill="%239d00ff" stroke="%2300f3ff" stroke-width="3"/></svg>'
+            },
+            {
+                name: 'Lingote Oro',
+                img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="15,40 30,20 85,20 70,40" fill="%23ffe680"/><polygon points="15,40 70,40 70,75 15,75" fill="%23ffcc00"/><polygon points="70,40 85,20 85,55 70,75" fill="%23cca300"/></svg>'
+            }
+        ];
 
-        // Inicializar contexto de audio por interacción web
-        function initAudio() {
+        let balanceARS = 50000;
+        let jackpotARS = 250000;
+        let audioCtx = null;
+        let audioEnabled = false;
+        let backgroundMusicTimer = null;
+
+        // Construir tiras visuales iniciales para los 3 rodillos
+        function inicializarRodillos() {
+            for (let i = 1; i <= 3; i++) {
+                const strip = document.getElementById(`strip${i}`);
+                strip.innerHTML = '';
+                // Crear secuencia repetida para efecto loop visual
+                let htmlContent = '';
+                for (let j = 0; j < 6; j++) {
+                    const rndSym = assetSymbols[(i + j) % assetSymbols.length];
+                    htmlContent += `
+                        <div class="symbol-card">
+                            <img src="${rndSym.img}" alt="${rndSym.name}">
+                            <span class="symbol-name">${rndSym.name}</span>
+                        </div>
+                    `;
+                }
+                strip.innerHTML = htmlContent;
+                strip.style.transform = 'translateY(0px)';
+            }
+        }
+
+        function toggleAudioSystem() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
             if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
             }
-        }
-
-        function toggleAudio() {
-            initAudio();
-            isAudioEnabled = !isAudioEnabled;
+            audioEnabled = !audioEnabled;
             const btn = document.getElementById('audioToggle');
-            if (isAudioEnabled) {
+            if (audioEnabled) {
                 btn.classList.add('active');
-                btn.textContent = "🔊 SONIDO ACTIVADO (BGM ON)";
-                startBGM();
+                btn.textContent = "🔊 AUDIO & BGM ACTIVADOS";
+                iniciarMusicaFondo();
             } else {
                 btn.classList.remove('active');
-                btn.textContent = "🔇 ACTIVAR SONIDO / BGM";
-                stopBGM();
+                btn.textContent = "🎵 ACTIVAR BGM & EFECTOS";
+                detenerMusicaFondo();
             }
         }
 
-        // Sintetizador de efectos de sonido (SFX) por Web Audio API
-        function playTone(freq, type, duration, delay = 0) {
-            if (!isAudioEnabled || !audioCtx) return;
+        // Sintetizador Web Audio para efectos musicales y sonoros
+        function emitirNota(frecuencia, tipoOnda, duracion, retardo = 0) {
+            if (!audioEnabled || !audioCtx) return;
             setTimeout(() => {
                 try {
                     let osc = audioCtx.createOscillator();
                     let gain = audioCtx.createGain();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                    osc.type = tipoOnda;
+                    osc.frequency.setValueAtTime(frecuencia, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duracion);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.start();
-                    osc.stop(audioCtx.currentTime + duration);
+                    osc.stop(audioCtx.currentTime + duracion);
                 } catch(e) {}
-            }, delay);
+            }, retardo);
         }
 
-        function soundSpinTick() {
-            playTone(300 + Math.random() * 200, 'square', 0.05);
+        function sonidilloGiroTick() {
+            emitirNota(250 + Math.random() * 150, 'square', 0.04);
         }
 
-        function soundWin() {
-            if (!isAudioEnabled) return;
-            playTone(523.25, 'sine', 0.15, 0);   // Do
-            playTone(659.25, 'sine', 0.15, 150); // Mi
-            playTone(783.99, 'sine', 0.15, 300); // Sol
-            playTone(1046.50, 'sine', 0.4, 450); // Do alto
+        function reproducirSonidoVictoria() {
+            if (!audioEnabled) return;
+            emitirNota(523.25, 'sine', 0.15, 0);   // C5
+            emitirNota(659.25, 'sine', 0.15, 120); // E5
+            emitirNota(783.99, 'sine', 0.15, 240); // G5
+            emitirNota(1046.50, 'sine', 0.4, 360);  // C6
         }
 
-        function soundJackpot() {
-            if (!isAudioEnabled) return;
-            let notes = [440, 554, 659, 880, 987, 1318];
-            notes.forEach((note, index) => {
-                playTone(note, 'sawtooth', 0.2, index * 100);
+        function reproducirSonidoJackpot() {
+            if (!audioEnabled) return;
+            let arpegio = [300, 450, 600, 750, 900, 1200];
+            arpegio.forEach((hz, idx) => {
+                emitirNota(hz, 'sawtooth', 0.25, idx * 80);
             });
         }
 
-        // Música de fondo cibernética automatizada (BGM)
-        function startBGM() {
-            if (bgmiInterval) return;
-            let bassNotes = [110, 123.47, 130.81, 98.00];
-            let step = 0;
-            bgmInterval = setInterval(() => {
-                if (!isAudioEnabled || !audioCtx) return;
+        function iniciarMusicaFondo() {
+            if (backgroundMusicTimer) return;
+            let secuenciaAcordes = [110, 130.81, 146.83, 98.00]; // A2, C3, D3, G2
+            let paso = 0;
+            backgroundMusicTimer = setInterval(() => {
+                if (!audioEnabled || !audioCtx) return;
                 try {
                     let osc = audioCtx.createOscillator();
                     let gain = audioCtx.createGain();
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(bassNotes[step % bassNotes.length], audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
+                    osc.frequency.setValueAtTime(secuenciaAcordes[paso % secuenciaAcordes.length], audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.35);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.start();
-                    osc.stop(audioCtx.currentTime + 0.3);
-                    step++;
+                    osc.stop(audioCtx.currentTime + 0.35);
+                    paso++;
                 } catch(e) {}
-            }, 300);
+            }, 320);
         }
 
-        function stopBGM() {
-            if (bgmInterval) {
-                clearInterval(bgmInterval);
-                bgmInterval = null;
+        function detenerMusicaFondo() {
+            if (backgroundMusicTimer) {
+                clearInterval(backgroundMusicTimer);
+                backgroundMusicTimer = null;
             }
         }
 
-        // Lógica del juego de Tragamonedas
-        function iniciarJuego() {
-            initAudio();
-            const betInput = document.getElementById('betInput');
-            const apuesta = parseInt(betInput.value);
-            const balanceElem = document.getElementById('balance');
-            const messageElem = document.getElementById('message');
-            const spinBtn = document.getElementById('spinBtn');
-            const r1 = document.getElementById('reel1');
-            const r2 = document.getElementById('reel2');
-            const r3 = document.getElementById('reel3');
+        // Lógica de juego con animación de desplazamiento vertical fluida
+        function ejecutarJugada() {
+            if (!audioCtx && audioEnabled) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
 
-            if (isNaN(apuesta) || apuesta <= 0) {
-                messageElem.textContent = "¡ERROR: Apuesta inválida!";
-                messageElem.className = "message lose";
+            const inputApuesta = document.getElementById('betInput');
+            const montoApuesta = parseInt(inputApuesta.value);
+            const txtBalance = document.getElementById('balanceDisplay');
+            const txtJackpot = document.getElementById('jackpotDisplay');
+            const txtNotif = document.getElementById('notificationText');
+            const btnSpin = document.getElementById('spinBtn');
+
+            if (isNaN(montoApuesta) || montoApuesta <= 0) {
+                txtNotif.textContent = "⚠️ Ingrese un monto válido en ARS.";
+                txtNotif.className = "notification-bar status-lose";
                 return;
             }
 
-            if (apuesta > balance) {
-                messageElem.textContent = "¡ERROR: Fondos insuficientes!";
-                messageElem.className = "message lose";
+            if (montoApuesta > balanceARS) {
+                txtNotif.textContent = "❌ Fondos insuficientes en pesos.";
+                txtNotif.className = "notification-bar status-lose";
                 return;
             }
 
-            balance -= apuesta;
-            balanceElem.textContent = balance;
-            spinBtn.disabled = true;
-            messageElem.textContent = "PROCESANDO APUESTA EN RED NEURONAL...";
-            messageElem.className = "message";
+            // Descontar apuesta
+            balanceARS -= montoApuesta;
+            jackpotARS += Math.floor(montoApuesta * 0.1); // El jackpot acumula el 10% de cada apuesta
+            txtBalance.textContent = `$${balanceARS.toLocaleString('es-AR')} ARS`;
+            txtJackpot.textContent = `$${jackpotARS.toLocaleString('es-AR')} ARS`;
 
-            r1.classList.add('spinning');
-            r2.classList.add('spinning');
-            r3.classList.add('spinning');
+            btnSpin.disabled = true;
+            txtNotif.textContent = "⚡ GIRANDO RODILLOS CUÁNTICOS...";
+            txtNotif.className = "notification-bar";
 
-            let loops = 0;
-            let maxLoops = 25;
+            // Determinar resultados aleatorios finales
+            const res1 = Math.floor(Math.random() * assetSymbols.length);
+            const res2 = Math.floor(Math.random() * assetSymbols.length);
+            const res3 = Math.floor(Math.random() * assetSymbols.length);
 
-            let spinTimer = setInterval(() => {
-                r1.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
-                r2.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
-                r3.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
-                soundSpinTick();
-                loops++;
-
-                if (loops > maxLoops) {
-                    clearInterval(spinTimer);
-
-                    r1.classList.remove('spinning');
-                    r2.classList.remove('spinning');
-                    r3.classList.remove('spinning');
-
-                    const final1 = simbolos[Math.floor(Math.random() * simbolos.length)];
-                    const final2 = simbolos[Math.floor(Math.random() * simbolos.length)];
-                    const final3 = simbolos[Math.floor(Math.random() * simbolos.length)];
-
-                    r1.textContent = final1;
-                    r2.textContent = final2;
-                    r3.textContent = final3;
-
-                    if (final1 === '7️⃣' && final2 === '7️⃣' && final3 === '7️⃣') {
-                        let premio = apuesta * 50;
-                        balance += premio;
-                        messageElem.textContent = `⚡ ¡MEGA JACKPOT QUÁNTICO! +${premio} 🪙 ⚡`;
-                        messageElem.className = "message win";
-                        soundJackpot();
-                    } else if (final1 === final2 && final2 === final3) {
-                        let premio = apuesta * 15;
-                        balance += premio;
-                        messageElem.textContent = `🔥 ¡TRIPLE COMBINACIÓN! +${premio} 🪙 🔥`;
-                        messageElem.className = "message win";
-                        soundWin();
-                    } else if (final1 === final2 || final2 === final3 || final1 === final3) {
-                        let premio = apuesta * 3;
-                        balance += premio;
-                        messageElem.textContent = `✨ ¡DOBLE CONEXIÓN! +${premio} 🪙 ✨`;
-                        messageElem.className = "message win";
-                        soundWin();
-                    } else {
-                        messageElem.textContent = "CONEXIÓN PERDIDA. Intente nuevamente.";
-                        messageElem.className = "message lose";
-                    }
-
-                    balanceElem.textContent = balance;
-                    spinBtn.disabled = false;
-
-                    if (balance <= 0) {
-                        messageElem.textContent = "¡SISTEMA BLOQUEADO: Sin créditos!";
-                        spinBtn.disabled = true;
-                    }
+            // Animar tiras de los 3 rodillos
+            for (let i = 1; i <= 3; i++) {
+                const strip = document.getElementById(`strip${i}`);
+                // Añadir elementos extras aleatorios para simular velocidad de giro vertical
+                let htmlContent = '';
+                const targetIndex = [res1, res2, res3][i-1];
+                
+                // Generar 12 items de relleno visual y posicionar el ganador al final
+                let indicesAleatorios = [];
+                for(let k=0; k<12; k++) {
+                    indicesAleatorios.push(Math.floor(Math.random() * assetSymbols.length));
                 }
-            }, 70);
+                indicesAleatorios.push(targetIndex); // El resultado final exacto
+
+                indicesAleatorios.forEach(idx => {
+                    const sym = assetSymbols[idx];
+                    htmlContent += `
+                        <div class="symbol-card">
+                            <img src="${sym.img}" alt="${sym.name}">
+                            <span class="symbol-name">${sym.name}</span>
+                        </div>
+                    `;
+                });
+                strip.innerHTML = htmlContent;
+                
+                // Desplazamiento dinámico hacia abajo
+                strip.style.transition = 'none';
+                strip.style.transform = 'translateY(0px)';
+                
+                setTimeout(() => {
+                    strip.style.transition = `transform ${0.6 + (i * 0.3)}s cubic-bezier(0.15, 0.85, 0.35, 1)`;
+                    // Desplazar exactamente hasta el último elemento (índice 12 * altura de tarjeta 130px)
+                    const desplazamientoFinal = -(12 * 130);
+                    strip.style.transform = `translateY(${desplazamientoFinal}px)`;
+                    sonidilloGiroTick();
+                }, 50);
+            }
+
+            // Evaluar resultados tras finalizar la animación
+            setTimeout(() => {
+                let premioCalculado = 0;
+                let mensajeResultado = "";
+
+                if (res1 === 2 && res2 === 2 && res3 === 2) {
+                    // Triple 7: ¡Jackpot!
+                    premioCalculado = jackpotARS;
+                    balanceARS += premioCalculado;
+                    mensajeResultado = `🔥 ¡JACKPOT MÁXIMO LUHACASINO! +$${premioCalculado.toLocaleString('es-AR')} ARS 🔥`;
+                    txtNotif.className = "notification-bar status-win";
+                    reproducirSonidoJackpot();
+                    jackpotARS = 150000; // Resetear jackpot base
+                } else if (res1 === res2 && res2 === res3) {
+                    // Triple combinación normal
+                    premioCalculado = montoApuesta * 20;
+                    balanceARS += premioCalculado;
+                    mensajeResultado = `💎 ¡TRIPLE PREMIO ÉPICO! +$${premioCalculado.toLocaleString('es-AR')} ARS`;
+                    txtNotif.className = "notification-bar status-win";
+                    reproducirSonidoVictoria();
+                } else if (res1 === res2 || res2 === res3 || res1 === res3) {
+                    // Doble combinación
+                    premioCalculado = montoApuesta * 4;
+                    balanceARS += premioCalculado;
+                    mensajeResultado = `✨ ¡COMBINACIÓN DOBLE! +$${premioCalculado.toLocaleString('es-AR')} ARS`;
+                    txtNotif.className = "notification-bar status-win";
+                    reproducirSonidoVictoria();
+                } else {
+                    mensajeResultado = "❌ Sin premios en esta tirada. ¡Intente nuevamente!";
+                    txtNotif.className = "notification-bar status-lose";
+                }
+
+                txtBalance.textContent = `$${balanceARS.toLocaleString('es-AR')} ARS`;
+                txtJackpot.textContent = `$${jackpotARS.toLocaleString('es-AR')} ARS`;
+                txtNotif.textContent = mensajeResultado;
+                btnSpin.disabled = false;
+
+                if (balanceARS <= 0) {
+                    txtNotif.textContent = "⚠️ SALDO AGOTADO. Recargue la página para continuar.";
+                    btnSpin.disabled = true;
+                }
+            }, 1600);
         }
+
+        // Inicializar al cargar la página
+        window.onload = () => {
+            inicializarRodillos();
+        };
     </script>
 </body>
 </html>
