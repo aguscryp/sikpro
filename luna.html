@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSlots - Casino Online</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-hidden;
+        }
+
+        .casino-container {
+            background: linear-gradient(135deg, #1a1c29 0%, #0f1017 100%);
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #00ffcc;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .balance-board {
+            background: #12141c;
+            border: 1px solid #ff007f;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #ff007f;
+            text-shadow: 0 0 5px rgba(255, 0, 127, 0.5);
+        }
+
+        .slots-window {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background: #050508;
+            border: 2px inset #2a2e43;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .reel {
+            background: #151823;
+            border: 1px solid #00ffcc;
+            border-radius: 8px;
+            width: 70px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            transition: transform 0.1s ease;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .bet-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #151823;
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .bet-control label {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .bet-control input {
+            background: #0b0f19;
+            border: 1px solid #00ffcc;
+            color: #fff;
+            padding: 5px;
+            width: 70px;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, #ff007f 0%, #b8005b 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .spin-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ff3399 0%, #cc0066 100%);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .spin-btn:disabled {
+            background: #444;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 1rem;
+            min-height: 24px;
+            font-weight: bold;
+        }
+
+        .win {
+            color: #00ffcc;
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+        }
+
+        .lose {
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="casino-container">
+        <h1>CYBER SLOTS</h1>
+        <div class="balance-board">
+            CRÉDITOS: <span id="balance">1000</span> 🪙
+        </div>
+
+        <div class="slots-window">
+            <div class="reel" id="reel1">🍒</div>
+            <div class="reel" id="reel2">🍋</div>
+            <div class="reel" id="reel3">🔔</div>
+        </div>
+
+        <div class="controls">
+            <div class="bet-control">
+                <label for="betInput">Apuesta:</label>
+                <input type="number" id="betInput" value="10" min="5" max="500">
+            </div>
+            <button class="spin-btn" id="spinBtn" onclick="girarSlots()">¡GIRAR!</button>
+        </div>
+
+        <div class="message" id="message">¡Prepara tu jugada!</div>
+    </div>
+
+    <script>
+        const simbolos = ['🍒', '🍋', '🔔', '💎', ' 7️⃣ '];
+        let balance = 1000;
+
+        function girarSlots() {
+            const betInput = document.getElementById('betInput');
+            const apuesta = parseInt(betInput.value);
+            const balanceElem = document.getElementById('balance');
+            const messageElem = document.getElementById('message');
+            const spinBtn = document.getElementById('spinBtn');
+
+            if (isNaN(apuesta) || apuesta <= 0) {
+                messageElem.textContent = "¡Introduce una apuesta válida!";
+                messageElem.className = "message lose";
+                return;
+            }
+
+            if (apuesta > balance) {
+                messageElem.textContent = "¡No tienes suficientes créditos!";
+                messageElem.className = "message lose";
+                return;
+            }
+
+            // Descontar apuesta y bloquear botón
+            balance -= apuesta;
+            balanceElem.textContent = balance;
+            spinBtn.disabled = true;
+            messageElem.textContent = "Girando carretes...";
+            messageElem.className = "message";
+
+            const r1 = document.getElementById('reel1');
+            const r2 = document.getElementById('reel2');
+            const r3 = document.getElementById('reel3');
+
+            let loops = 0;
+            const intervalo = setInterval(() => {
+                r1.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+                r2.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+                r3.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+                loops++;
+
+                if (loops > 15) {
+                    clearInterval(intervalo);
+
+                    // Resultados finales aleatorios
+                    const final1 = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    const final2 = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    const final3 = simbolos[Math.floor(Math.random() * simbolos.length)];
+
+                    r1.textContent = final1;
+                    r2.textContent = final2;
+                    r3.textContent = final3;
+
+                    // Evaluar premio
+                    if (final1 === final2 && final2 === final3) {
+                        let premio = apuesta * 10;
+                        balance += premio;
+                        messageElem.textContent = `¡JACKPOT! Ganaste ${premio} créditos 🎉`;
+                        messageElem.className = "message win";
+                    } else if (final1 === final2 || final2 === final3 || final1 === final3) {
+                        let premio = apuesta * 2;
+                        balance += premio;
+                        messageElem.textContent = `¡Bien! Combinación doble: +${premio} 🪙`;
+                        messageElem.className = "message win";
+                    } else {
+                        messageElem.textContent = "¡Has perdido esta vez, prueba de nuevo!";
+                        messageElem.className = "message lose";
+                    }
+
+                    balanceElem.textContent = balance;
+                    spinBtn.disabled = false;
+
+                    if (balance <= 0) {
+                        messageElem.textContent = "¡Game Over! Recarga la página para reiniciar.";
+                        spinBtn.disabled = true;
+                    }
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
