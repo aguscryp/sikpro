@@ -1,339 +1,478 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIK | Ecosistema de Negocios y Operaciones</title>
+    <title>SIK | Scale In Konnection — Conferencias y Softwares</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        sikDark: '#0a0a0a',
-                        sikCard: '#121212',
-                        sikGreen: '#10b981',
-                        sikGreenLight: '#34d399',
-                        sikGreenDark: '#059669',
-                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.05)',
+                        'card': '0 10px 30px -10px rgba(0, 0, 0, 0.03)',
+                        'hover': '0 30px 60px -15px rgba(0, 0, 0, 0.08)',
+                        'btn': '0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.12)',
+                        'btn-hover': '0 4px 16px -2px rgba(0, 0, 0, 0.22)',
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #f3f4f6;
-            overflow-x: hidden;
-        }
-        #particles-js {
-            position: fixed;
+        input[type=range] {
+            -webkit-appearance: none;
             width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            pointer-events: none;
+            background: transparent;
         }
-        .glass-nav {
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: #000000;
+            border: 3px solid #ffffff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.28);
+            cursor: pointer;
+            margin-top: -8px;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .glass-card {
-            background: rgba(18, 18, 18, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.12);
         }
-        .glass-card:hover {
-            border-color: rgba(16, 185, 129, 0.5);
-            box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.25);
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 5px;
+            cursor: pointer;
+            background: #e4e4e7;
+            border-radius: 999px;
         }
-        .text-gradient {
-            background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .grid-bg {
+            background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
+            background-size: 32px 32px;
         }
-        .bg-gradient-glow {
-            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
-        }
-        /* Animación Menú Lateral */
-        #mobile-menu {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-            transform: translateX(-100%);
-            opacity: 0;
-        }
-        #mobile-menu.open {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        /* Animación Contador */
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; text-shadow: 0 0 20px rgba(16, 185, 129, 0.6); }
-        }
-        .counter-animate {
-            animation: pulseGlow 3s infinite ease-in-out;
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
         }
     </style>
 </head>
-<body class="relative min-h-screen flex flex-col justify-between selection:bg-sikGreen selection:text-black">
+<body class="bg-zinc-50 text-zinc-900 antialiased selection:bg-black selection:text-white">
 
-    <div id="particles-js"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-glow pointer-events-none z-0"></div>
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-zinc-200/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="leading-tight">
+                    <span class="block font-display font-extrabold text-xl tracking-tighter text-black uppercase">SIK</span>
+                    <span class="block text-[10px] font-bold tracking-widest uppercase text-zinc-400">Scale In Konnection</span>
+                </div>
+            </a>
 
-    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
-            <div class="flex items-center">
-                <button id="menu-btn" aria-label="Abrir Menú" class="group relative p-2 rounded-xl text-gray-300 hover:text-sikGreen hover:bg-white/5 transition-all focus:outline-none">
-                    <div class="w-6 h-5 flex flex-col justify-between">
-                        <span class="w-full h-0.5 bg-current transform transition-all duration-300 group-hover:translate-x-0.5"></span>
-                        <span class="w-4 h-0.5 bg-current transform transition-all duration-300 group-hover:w-full"></span>
-                        <span class="w-full h-0.5 bg-current transform transition-all duration-300 group-hover:-translate-x-0.5"></span>
-                    </div>
-                </button>
-            </div>
+            <nav class="hidden md:flex items-center gap-9 text-[13px] font-medium text-zinc-600">
+                <a href="#modelo" class="hover:text-black transition-colors duration-200">Modelo Operativo</a>
+                <a href="#habilidades" class="hover:text-black transition-colors duration-200">Habilidades y WhatsApp</a>
+                <a href="#simulador" class="hover:text-black transition-colors duration-200">Simulador de Bonos</a>
+            </nav>
 
-            <div class="flex items-center space-x-4">
-                <a href="index.html" class="flex items-center space-x-2 group">
-                    <div class="relative px-3 py-1 rounded-lg bg-sikCard border border-sikGreen/30 group-hover:border-sikGreen transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-                        <span class="text-2xl font-black tracking-widest text-gradient">SIK</span>
-                        <span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-sikGreen animate-ping"></span>
-                    </div>
-                </a>
-            </div>
-
+            <!-- Botón de Navbar compacto y refinado -->
+            <a href="#simulador" class="group inline-flex items-center gap-2 bg-zinc-950 text-white text-xs font-medium px-4 py-2.5 rounded-lg border border-white/10 shadow-btn hover:bg-zinc-800 hover:shadow-btn-hover active:scale-[0.98] transition-all duration-200 tracking-wide">
+                <span>Simular Ganancias</span>
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+            </a>
         </div>
     </header>
 
-    <div id="menu-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
-    <nav id="mobile-menu" class="fixed top-0 left-0 h-full w-80 bg-[#0d0d0d] border-r border-sikGreen/20 z-50 p-6 flex flex-col justify-between shadow-2xl">
-        <div>
-            <div class="flex items-center justify-between pb-6 border-b border-white/10">
-                <span class="text-xl font-bold tracking-wider text-gradient">NAVEGACIÓN</span>
-                <button id="close-menu-btn" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
+    <!-- Hero Section -->
+    <section class="relative grid-bg border-b border-zinc-200 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-50/50 to-zinc-50 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 py-24 md:py-32 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-2 border border-zinc-200 bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-full mb-8 shadow-sm">
+                        <span class="w-2 h-2 bg-black rounded-full animate-pulse"></span>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-zinc-700">Representantes Oficiales en Argentina</span>
+                    </div>
+                    
+                    <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-black leading-[1.08] mb-7">
+                        Generá ingresos con tu WhatsApp y convertite en <span class="bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-900 underline decoration-zinc-300 decoration-4 underline-offset-8">Representante de SIK</span> en tu provincia.
+                    </h1>
+                    
+                    <p class="text-base md:text-lg text-zinc-600 leading-relaxed max-w-2xl mb-9 font-normal">
+                        En <strong class="text-black font-semibold">SIK (Scale In Konnection)</strong> seleccionamos organizadores conferencistas para estructurar eventos donde capacitamos a personas para generar ingresos utilizando solo un celular, dominando más de 25 habilidades clave en marketing profesional.
+                    </p>
+
+                    <!-- Botones Principales Estilizados y Compactos -->
+                    <div class="flex flex-wrap items-center gap-3.5">
+                        <a href="#simulador" class="group inline-flex items-center justify-center gap-2.5 bg-zinc-950 text-white font-medium px-6 py-3 rounded-lg text-xs uppercase tracking-wider border border-white/10 shadow-btn hover:bg-zinc-800 hover:shadow-btn-hover active:scale-[0.98] transition-all duration-200">
+                            <span>Simular Bonos Semanales</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 transition-all"></i>
+                        </a>
+
+                        <a href="#modelo" class="group inline-flex items-center justify-center gap-2 bg-white text-zinc-800 border border-zinc-200/90 font-medium px-5 py-3 rounded-lg text-xs uppercase tracking-wider shadow-sm hover:border-zinc-400 hover:text-black hover:bg-zinc-50/80 active:scale-[0.98] transition-all duration-200">
+                            <span>Primera Misión</span>
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-zinc-400 group-hover:text-black transition-colors"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Elemento 3D / Representación Visual Ilustrativa -->
+                <div class="lg:col-span-5">
+                    <div class="relative bg-gradient-to-br from-zinc-900 to-zinc-950 p-8 md:p-10 rounded-3xl text-white shadow-2xl border border-zinc-800 overflow-hidden group">
+                        <div class="absolute -right-12 -top-12 w-48 h-48 bg-zinc-800/40 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -left-12 -bottom-12 w-48 h-48 bg-zinc-800/40 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-8">
+                                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Ecosistema 3D SIK</span>
+                                <div class="w-2.5 h-2.5 bg-white rounded-full animate-ping"></div>
+                            </div>
+
+                            <div class="space-y-5">
+                                <div class="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-md flex items-center gap-4 transition-all duration-300 hover:bg-white/10 hover:translate-x-1">
+                                    <div class="w-11 h-11 bg-white text-black rounded-xl flex items-center justify-center font-bold shrink-0 shadow-md">
+                                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display font-bold text-sm text-white">Ingresos por WhatsApp</h4>
+                                        <p class="text-xs text-zinc-400 mt-0.5">Gestión y monetización directa desde tu celular.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-md flex items-center gap-4 transition-all duration-300 hover:bg-white/10 hover:translate-x-1">
+                                    <div class="w-11 h-11 bg-white text-black rounded-xl flex items-center justify-center font-bold shrink-0 shadow-md">
+                                        <i data-lucide="globe" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display font-bold text-sm text-white">Representante Provincial</h4>
+                                        <p class="text-xs text-zinc-400 mt-0.5">Liderazgo exclusivo en tu zona geográfica.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-md flex items-center gap-4 transition-all duration-300 hover:bg-white/10 hover:translate-x-1">
+                                    <div class="w-11 h-11 bg-white text-black rounded-xl flex items-center justify-center font-bold shrink-0 shadow-md">
+                                        <i data-lucide="award" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display font-bold text-sm text-white">+25 Habilidades de Marketing</h4>
+                                        <p class="text-xs text-zinc-400 mt-0.5">Formación profesional integral para emprendedores.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <ul class="mt-8 space-y-4">
-                <li>
-                    <a href="testimonios.html" class="flex items-center px-4 py-3 rounded-xl text-gray-300 hover:text-sikGreen hover:bg-sikGreen/10 font-medium transition-all group">
-                        <span class="w-2 h-2 rounded-full bg-sikGreen/40 group-hover:bg-sikGreen mr-3 transition-colors"></span>
-                        Testimonios
-                    </a>
-                </li>
-                <li>
-                    <a href="auditoria.html" class="flex items-center px-4 py-3 rounded-xl text-gray-300 hover:text-sikGreen hover:bg-sikGreen/10 font-medium transition-all group">
-                        <span class="w-2 h-2 rounded-full bg-sikGreen/40 group-hover:bg-sikGreen mr-3 transition-colors"></span>
-                        Auditoria de Ventas
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="pt-6 border-t border-white/10">
-            <a href="login.html" class="w-full flex items-center justify-center px-6 py-3.5 rounded-xl font-bold bg-gradient-to-r from-sikGreen to-sikGreenDark text-black hover:opacity-90 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                INICIAR SESIÓN
-            </a>
-        </div>
-    </nav>
-
-    <main class="flex-grow pt-32 pb-20 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-
-            <section class="text-center max-w-4xl mx-auto space-y-8">
-                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-sikCard border border-sikGreen/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-                    <span class="w-2 h-2 rounded-full bg-sikGreen animate-pulse"></span>
-                    <span class="text-xs sm:text-sm font-semibold tracking-wide uppercase text-sikGreen">La plataforma número 1 en ecosistema de negocios</span>
+            <!-- Métricas Clave -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
+                <div class="bg-white p-8 rounded-3xl border border-zinc-200/80 shadow-card hover:shadow-hover transition-all duration-300 group">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="banknote" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">Bono Semanal Máximo</p>
+                    <p class="font-display text-3xl md:text-4xl font-extrabold text-black">$250.000 <span class="text-base font-medium text-zinc-500">ARS</span></p>
+                    <p class="text-sm text-zinc-600 mt-2">Pagos semanales por cumplimiento de objetivos de sala.</p>
                 </div>
                 
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
-                    Rellena documentos operativos y genera más de <span class="text-gradient">$1.550.000 pesos</span> administrando leads, métricas y resultados.
-                </h1>
-
-                <p class="text-lg sm:text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
-                    En <strong class="text-white font-semibold">SIK</strong> escalamos marcas, empresas, coaches, startups, pequeños emprendedores y brindamos herramientas esenciales para gestionar operaciones de alto impacto.
-                </p>
-
-                <div class="glass-card rounded-2xl p-6 sm:p-8 max-w-xl mx-auto border border-sikGreen/30 relative overflow-hidden">
-                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-sikGreen/10 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="text-xs sm:text-sm uppercase tracking-widest text-gray-400 font-semibold mb-2">Comunidad Activa desde 2024 en adelante</div>
-                    <div id="counter" class="text-5xl sm:text-6xl font-black text-gradient counter-animate">0</div>
-                    <p class="text-sm text-gray-300 mt-2 font-medium">Personas accedieron a SIK buscando aprender, estructurar o escalar sus negocios.</p>
-                </div>
-            </section>
-
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 group">
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 rounded-xl bg-sikGreen/10 border border-sikGreen/30 flex items-center justify-center text-sikGreen group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white">Monetiza Instagram</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            Con un perfil de tan solo <strong class="text-white">200 seguidores</strong> podés hacer <span class="text-sikGreen font-semibold">más de $6.000 dólares</span> tranquilamente aplicando nuestras estrategias de conversión y posicionamiento.
-                        </p>
+                <div class="bg-white p-8 rounded-3xl border border-zinc-200/80 shadow-card hover:shadow-hover transition-all duration-300 group">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="users" class="w-5 h-5"></i>
                     </div>
-                    <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-sikGreen">Estrategia Comprobada</span>
-                        <a href="igvsl.html" class="text-sm font-bold text-white group-hover:translate-x-1 transition-transform inline-flex items-center">Acceder &rarr;</a>
-                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">Primera Misión Clave</p>
+                    <p class="font-display text-3xl md:text-4xl font-extrabold text-black">20 Personas</p>
+                    <p class="text-sm text-zinc-600 mt-2">Capacidad mínima inicial de sala con entradas a $20.000.</p>
                 </div>
 
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 group">
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 rounded-xl bg-sikGreen/10 border border-sikGreen/30 flex items-center justify-center text-sikGreen group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white">Estructura y Administración de Documentos</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            Podés hacer <span class="text-sikGreen font-semibold">hasta $2,300 dólares por mes</span> llevando a cabo tareas operativas de administración con plantillas y sistemas listos para usar.
-                        </p>
+                <div class="bg-white p-8 rounded-3xl border border-zinc-200/80 shadow-card hover:shadow-hover transition-all duration-300 group">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="smartphone" class="w-5 h-5"></i>
                     </div>
-                    <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-sikGreen">Gestión Operativa</span>
-                        <a href="docvsl.html" class="text-sm font-bold text-white group-hover:translate-x-1 transition-transform inline-flex items-center">Acceder &rarr;</a>
-                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">Modelo Celular + WhatsApp</p>
+                    <p class="font-display text-3xl md:text-4xl font-extrabold text-black">App SIK + 25 Skills</p>
+                    <p class="text-sm text-zinc-600 mt-2">Conferencias, sueldos por tareas y marketing profesional.</p>
                 </div>
-
-            </section>
-
-            <section class="glass-card rounded-3xl p-8 sm:p-12 max-w-4xl mx-auto text-center space-y-8 border border-sikGreen/20">
-                <h3 class="text-3xl font-black text-white">Crecimiento e Innovación Constante</h3>
-                <p class="text-gray-300 text-lg leading-relaxed font-light">
-                    SIK está en constante evolución, vinimos para quedarnos y nuestro mensaje principal es <strong class="text-sikGreen font-bold">AYUDAR y brindar RESULTADOS</strong> reales y tangibles para cada socio y emprendedor.
-                </p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-white/10 text-left">
-                    <div class="bg-black/40 p-5 rounded-2xl border border-white/5">
-                        <span class="text-xs font-semibold text-sikGreen uppercase tracking-wider">Fundador y CEO</span>
-                        <h4 class="text-xl font-bold text-white mt-1">Agustin Fernandez</h4>
-                    </div>
-                    <div class="bg-black/40 p-5 rounded-2xl border border-white/5">
-                        <span class="text-xs font-semibold text-sikGreen uppercase tracking-wider">Owners y CEOS</span>
-                        <h4 class="text-xl font-bold text-white mt-1">Tahiel Coppetti ft Brian Prieto</h4>
-                    </div>
-                </div>
-            </section>
-
+            </div>
         </div>
-    </main>
+    </section>
 
-    <footer class="border-t border-white/10 bg-[#070707] py-8 text-center text-sm text-gray-500 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2">
-            <p>&copy; 2026 SIK. Todos los derechos reservados.</p>
-            <p class="text-sikGreen font-medium tracking-wide">La plataforma número 1 en ecosistema de negocios.</p>
+    <!-- Modelo Operativo / La Misión -->
+    <section id="modelo" class="py-32 border-b border-zinc-200 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl mb-20">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 block mb-3">01 / Estructura del Proyecto</span>
+                <h2 class="font-display text-3xl md:text-5xl font-extrabold tracking-tight text-black mb-6">
+                    Tu rol como Representante y Organizador SIK
+                </h2>
+                <p class="text-zinc-600 text-base md:text-lg leading-relaxed">
+                    Un sistema estandarizado donde tu liderazgo provincial y tu WhatsApp se convierten en una máquina de generación de eventos digitales.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Paso 1 -->
+                <div class="bg-zinc-50 border border-zinc-200/80 p-10 rounded-3xl shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 bg-white border border-zinc-200 rounded-xl flex items-center justify-center mb-8 font-display font-extrabold text-lg text-black shadow-sm group-hover:bg-black group-hover:text-white transition-all duration-300">
+                            01
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-black mb-4">Primera Misión: 20 Asistentes</h3>
+                        <p class="text-zinc-600 text-sm leading-relaxed">
+                            Tu objetivo inicial como organizador es estructurar un pequeño primer evento de <strong class="text-black font-semibold">20 personas</strong> interesadas en generar ingresos con su celular, adquiriendo su entrada por <strong class="text-black font-semibold">$20.000 ARS</strong>.
+                        </p>
+                    </div>
+                    <div class="mt-10 pt-6 border-t border-zinc-200/60 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black">
+                        <i data-lucide="target" class="w-4 h-4 text-zinc-500"></i>
+                        <span>Estándar de Arranque</span>
+                    </div>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="bg-zinc-50 border border-zinc-200/80 p-10 rounded-3xl shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 bg-white border border-zinc-200 rounded-xl flex items-center justify-center mb-8 font-display font-extrabold text-lg text-black shadow-sm group-hover:bg-black group-hover:text-white transition-all duration-300">
+                            02
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-black mb-4">Aprendizaje de 25+ Habilidades</h3>
+                        <p class="text-zinc-600 text-sm leading-relaxed">
+                            Los asistentes acceden a conferencias de alto valor donde aprenden más de <strong class="text-black font-semibold">25 habilidades importantes</strong> abarcando todo el marketing profesional y estrategias digitales modernas.
+                        </p>
+                    </div>
+                    <div class="mt-10 pt-6 border-t border-zinc-200/60 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black">
+                        <i data-lucide="book-open" class="w-4 h-4 text-zinc-500"></i>
+                        <span>Formación Avanzada</span>
+                    </div>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="bg-zinc-950 text-white border border-zinc-900 p-10 rounded-3xl shadow-xl flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-zinc-800/50 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center mb-8 font-display font-extrabold text-lg text-white">
+                            03
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-4">Bonos de hasta $250.000</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Al coordinar eventos recurrentes y superar las metas de sala como representante provincial, accedés a liquidaciones financieras directas de hasta <strong class="text-white font-semibold">$250.000 ARS</strong> cada semana.
+                        </p>
+                    </div>
+                    <div class="relative z-10 mt-10 pt-6 border-t border-zinc-800 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-300">
+                        <i data-lucide="trending-up" class="w-4 h-4 text-white"></i>
+                        <span>Escala Semanal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades y Ecosistema SIK -->
+    <section id="habilidades" class="py-32 border-b border-zinc-200 bg-zinc-50/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl mb-20">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 block mb-3">02 / Propuesta de Valor SIK</span>
+                <h2 class="font-display text-3xl md:text-5xl font-extrabold tracking-tight text-black mb-6">
+                    ¿Qué obtienen los participantes en SIK?
+                </h2>
+                <p class="text-zinc-600 text-base md:text-lg leading-relaxed">
+                    Un ecosistema completo diseñado para que cualquier persona pueda iniciar su camino digital directamente desde su celular y WhatsApp.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-10 rounded-3xl border border-zinc-200/80 shadow-card">
+                    <div class="w-11 h-11 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg text-black mb-3">Ingresos con tu WhatsApp</h3>
+                    <p class="text-zinc-600 text-sm leading-relaxed">
+                        Metodologías prácticas para comercializar y generar ingresos diarios y semanales utilizando WhatsApp y herramientas digitales automatizadas.
+                    </p>
+                </div>
+
+                <div class="bg-white p-10 rounded-3xl border border-zinc-200/80 shadow-card">
+                    <div class="w-11 h-11 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6">
+                        <i data-lucide="layers" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg text-black mb-3">25+ Habilidades de Marketing</h3>
+                    <p class="text-zinc-600 text-sm leading-relaxed">
+                        Capacitación intensiva abarcando todo el marketing profesional, creación de contenido, embudos de venta y tracción digital.
+                    </p>
+                </div>
+
+                <div class="bg-white p-10 rounded-3xl border border-zinc-200/80 shadow-card">
+                    <div class="w-11 h-11 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6">
+                        <i data-lucide="wallet" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg text-black mb-3">Sueldos Semanales por Tareas</h3>
+                    <p class="text-zinc-600 text-sm leading-relaxed">
+                        Sistema de recompensas y pagos periódicos estructurados para garantizar estabilidad y crecimiento económico continuo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulador de Bonos Interactivo -->
+    <section id="simulador" class="py-32 bg-black text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:24px_24px] opacity-30"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <div class="lg:col-span-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 block mb-3">03 / Proyección Financiera</span>
+                    <h2 class="font-display text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-6">
+                        Simulador de Bonos para Representantes SIK
+                    </h2>
+                    <p class="text-zinc-400 text-base leading-relaxed mb-8">
+                        Calculá tus ingresos potenciales por evento semanal considerando el valor de entrada de <strong class="text-white">$20.000 ARS</strong> por asistente.
+                    </p>
+                    
+                    <div class="space-y-4 border-t border-zinc-800 pt-8 text-sm">
+                        <div class="flex items-center gap-3 text-zinc-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-white shrink-0"></i>
+                            <span>Mínimo requerido inicial: 20 asistentes.</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-zinc-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-white shrink-0"></i>
+                            <span>Tope de bonificación semanal: $250.000 ARS.</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-zinc-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-white shrink-0"></i>
+                            <span>Liquidación automatizada cada 7 días.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <div class="bg-white text-black p-8 md:p-12 rounded-3xl shadow-2xl border border-zinc-200">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-200 pb-7 mb-8 gap-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Asistentes Activos en Sala</span>
+                                <div class="font-display text-3xl md:text-4xl font-extrabold text-black mt-1">
+                                    <span id="attendeesCount">20</span> <span class="text-base font-medium text-zinc-500">personas</span>
+                                </div>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Nivel de Evento</span>
+                                <div id="tierBadge" class="mt-1 inline-block bg-zinc-100 border border-zinc-200 text-black text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-md">
+                                    Primera Misión (20 pax)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-9">
+                            <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
+                                <span>Mínimo: 20</span>
+                                <span>Escala: 35</span>
+                                <span>Tope: 50+</span>
+                            </div>
+                            <input type="range" id="attendeesSlider" min="20" max="50" step="5" value="20">
+                        </div>
+
+                        <div class="bg-zinc-50 border border-zinc-200/80 p-7 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-inner">
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-1">Bono Semanal Estimado</p>
+                                <p id="weeklyBonus" class="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-black">
+                                    $100.000
+                                </p>
+                                <p class="text-xs text-zinc-500 mt-2">
+                                    Proyección mensual (4 eventos): <strong id="monthlyBonus" class="text-black">$400.000 ARS</strong>
+                                </p>
+                            </div>
+                            
+                            <!-- Botón Estilizado y Compacto dentro de la tarjeta -->
+                            <a href="#habilidades" class="group inline-flex items-center justify-center gap-2 bg-zinc-950 text-white text-xs font-medium uppercase tracking-wider px-5 py-2.5 rounded-lg border border-white/10 shadow-btn hover:bg-zinc-800 hover:shadow-btn-hover active:scale-[0.98] transition-all duration-200 shrink-0">
+                                <span>Entrada: $20.000</span>
+                                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-zinc-400 group-hover:text-white transition-colors"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Estético -->
+    <footer class="bg-zinc-950 text-white border-t border-zinc-900 py-16">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            <div>
+                <div class="flex items-center gap-3.5 mb-2.5">
+                    <span class="font-display font-bold text-sm uppercase tracking-wider text-white">SIK — Scale In Konnection</span>
+                </div>
+                <p class="text-xs text-zinc-400 max-w-md leading-relaxed">
+                    Ecosistema de conferencias digitales, capacitación en marketing profesional y desarrollo de representantes provinciales en Argentina.
+                </p>
+            </div>
+            <div class="text-xs text-zinc-500">
+                &copy; 2026 SIK · Scale In Konnection. Todos los derechos reservados.
+            </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        // Configuración de Partículas
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 60, density: { enable: true, value_area: 800 } },
-                color: { value: '#10b981' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.3, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: '#10b981',
-                    opacity: 0.15,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 1.5,
-                    direction: 'none',
-                    random: true,
-                    straight: false,
-                    out_mode: 'out',
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: {
-                    onhover: { enable: true, mode: 'grab' },
-                    onclick: { enable: true, mode: 'push' },
-                    resize: true
-                },
-                modes: {
-                    grab: { distance: 140, line_linked: { opacity: 0.4 } }
-                }
-            },
-            retina_detect: true
-        });
+        // Inicializar iconos Lucide
+        lucide.createIcons();
 
-        // Lógica del Menú Hamburguesa Lateral
-        const menuBtn = document.getElementById('menu-btn');
-        const closeMenuBtn = document.getElementById('close-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
+        // Lógica de la Calculadora Interactiva de Bonos
+        const slider = document.getElementById('attendeesSlider');
+        const attendeesCount = document.getElementById('attendeesCount');
+        const weeklyBonus = document.getElementById('weeklyBonus');
+        const monthlyBonus = document.getElementById('monthlyBonus');
+        const tierBadge = document.getElementById('tierBadge');
 
-        function openMenu() {
-            mobileMenu.classList.add('open');
-            menuOverlay.classList.remove('hidden');
-            setTimeout(() => menuOverlay.classList.remove('opacity-0'), 10);
-            document.body.style.overflow = 'hidden';
+        function formatARS(amount) {
+            return '$' + amount.toLocaleString('es-AR');
         }
 
-        function closeMenu() {
-            mobileMenu.classList.remove('open');
-            menuOverlay.classList.add('opacity-0');
-            setTimeout(() => {
-                menuOverlay.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 300);
+        function updateCalculator() {
+            const count = parseInt(slider.value);
+            
+            let weekly = 0;
+            if (count <= 20) {
+                weekly = 100000;
+            } else if (count <= 35) {
+                weekly = 175000;
+            } else {
+                weekly = 250000; // Tope máximo de $250,000
+            }
+
+            const monthly = weekly * 4;
+
+            attendeesCount.textContent = count;
+            weeklyBonus.textContent = formatARS(weekly);
+            monthlyBonus.textContent = formatARS(monthly) + ' ARS';
+
+            if (count === 20) {
+                tierBadge.textContent = 'Primera Misión (20 pax)';
+                tierBadge.className = 'mt-1 inline-block bg-zinc-100 border border-zinc-200 text-black text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-md';
+            } else if (count <= 35) {
+                tierBadge.textContent = 'Nivel Ejecutivo';
+                tierBadge.className = 'mt-1 inline-block bg-zinc-800 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-md';
+            } else {
+                tierBadge.textContent = 'Nivel Director (Tope $250k)';
+                tierBadge.className = 'mt-1 inline-block bg-black text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-md';
+            }
         }
 
-        menuBtn.addEventListener('click', openMenu);
-        closeMenuBtn.addEventListener('click', closeMenu);
-        menuOverlay.addEventListener('click', closeMenu);
-
-        // Animación del Contador Profesional de 0 a 5700
-        function animateCounter() {
-            const counterElement = document.getElementById('counter');
-            const target = 5700;
-            const duration = 2000; // 2 segundos
-            let startTimestamp = null;
-
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                // Usar función de aceleración easeOutExpo
-                const currentVal = Math.floor(progress === 1 ? target : target * (1 - Math.pow(2, -10 * progress)));
-                counterElement.textContent = currentVal.toLocaleString('es-ES');
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Ejecutar contador al cargar la página
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(animateCounter, 300);
-        });
+        slider.addEventListener('input', updateCalculator);
+        updateCalculator();
     </script>
 </body>
 </html>
